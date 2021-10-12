@@ -2,8 +2,8 @@ import numpy as np
 
 
 def load_data():
-    path_dataset = "../../data/train.csv"
-    feature_cols = np.arange(32)[2:31]
+    path_dataset = "../data/train.csv"
+    feature_cols = np.arange(32)[2:]
     data = np.genfromtxt(
         path_dataset, delimiter=",", skip_header=1, usecols=feature_cols)
     features = data
