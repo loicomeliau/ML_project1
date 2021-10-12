@@ -26,32 +26,21 @@ def compute_gradient(y, tx, w):
 
 # Linear regression using gradient descent
 def least_squares_GD(y, tx, initial_w, max_iters, gamma):
-    # Define parameters to store w and loss
-    ws = [initial_w]
-    losses = []
     w = initial_w
     # Apply gradient descent over max_iters iteration
     for n_iter in range(max_iters):
         # Compute gradient and loss
         gradient, _ = compute_gradient(y, tx, w)
-        loss = compute_loss(y, tx, w)
         # Update w by gradient
         w = w - gamma * gradient
-        # store w and loss
-        ws.append(w)
-        losses.append(loss)
-        print("Gradient Descent({bi}/{ti}): loss={l}, w0={w0}, w1={w1}".format(
-              bi=n_iter, ti=max_iters - 1, l=loss, w0=w[0], w1=w[1]))
 
-    return losses, ws
+    # Compute loss of last w value
+    loss = compute_loss(y, tx, w)
+    return w, loss
 
 
 # Linear regression using stochastic gradient descent
 def least_squares_SGD(y, tx, initial_w, max_iters, gamma):
-    """Stochastic gradient descent algorithm."""
-    # Define parameters to store w and loss
-    ws = [initial_w]
-    losses = []
     w = initial_w
     for n_iter in range(max_iters):
         # Pick mini-batch
@@ -61,17 +50,12 @@ def least_squares_SGD(y, tx, initial_w, max_iters, gamma):
         minibatch_tx = tx[sample_index:sample_index+1, :]
         # Compute SG and loss
         stoch_gradient = compute_gradient(minibatch_y, minibatch_tx, w)
-        loss = compute_loss(y, tx, w)
         # Update w by stochastic gradient
         w = w - gamma * stoch_gradient
-        # store w and loss
-        ws.append(w)
-        losses.append(loss)
 
-        print("Stochastic Gradient Descent({bi}/{ti}): loss={l}, w0={w0}, w1={w1}".format(
-            bi=n_iter, ti=max_iters - 1, l=loss, w0=w[0], w1=w[1]))
-
-    return losses, ws
+    # Compute loss of last w value
+    loss = compute_loss(y, tx, w)
+    return w, loss
 
 
 # Least squares regression using normal equations
@@ -87,4 +71,18 @@ def ridge_regression(y, tx, lambda_=0.1):
     x = tx.T.dot(y)
     w = np.linalg.solve(A, x)
     loss = compute_loss(y, tx, w)
+    return w, loss
+
+
+# Logistic regression using gradient descent or SGD
+def logistic_regression(y, tx, initial_w, max_iters, gamma):
+    w = None
+    loss = None
+    return w, loss
+
+
+# Regularized logistic regression using gradient descent or SGD
+def reg_logistic_regression(y, tx, initial_w, lambda_, max_iters, gamma):
+    w = None
+    loss = None
     return w, loss
