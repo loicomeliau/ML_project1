@@ -1,11 +1,12 @@
 import numpy as np
 
 
-def load_data(type='train'):
-    type = type.lower().strip()
-    if type == 'train':
+def load_data(dataset_type='train'):
+    dataset_type = dataset_type.lower().strip()
+    if dataset_type == 'train':
         path_dataset = "../data/train.csv"
-    elif type == 'test':
+    elif dataset_type == 'test':
+        # Path to adapt because no in the repo
         path_dataset = "../data/test.csv"
     feature_cols = np.arange(32)[2:]
     data = np.genfromtxt(
